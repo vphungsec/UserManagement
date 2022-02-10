@@ -8,8 +8,8 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=128)
     position = models.CharField(max_length=256)
     sex = models.BooleanField()
-    phone = models.CharField(max_length=15, unique=True)
-    address = models.CharField(max_length=256)
+    phone = models.CharField(max_length=15, unique=True, null=True)
+    address = models.CharField(max_length=256, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -18,7 +18,7 @@ class Employee(models.Model):
         ordering = ['created_at', 'updated_at']
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return str(self.id)
 
 
 class Training(models.Model):

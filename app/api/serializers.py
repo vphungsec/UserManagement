@@ -6,6 +6,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = '__all__'
+        # read_only_fields = ['id']
 
 
 class TrainingSerializer(serializers.ModelSerializer):
@@ -18,3 +19,4 @@ class UserPermissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPermission
         fields = '__all__'
+        extra_kwargs = {'is_admin': {'default': False}}
