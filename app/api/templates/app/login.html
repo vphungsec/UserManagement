@@ -19,8 +19,16 @@
                 <i class="fa-solid fa-user"></i>
             </div>
 
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <!-- Login Form -->
-            <form method="POST" action="{% url 'login' %}">
+            <form method="POST" action="{% url 'login' %}" multiple="data">
                 {% csrf_token %}
                 <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
                 <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">

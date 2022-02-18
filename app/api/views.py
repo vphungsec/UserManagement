@@ -6,8 +6,10 @@ from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import redirect
+import sys
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -18,19 +20,49 @@ def api_root(request, format=None):
     })
 
 
+def login(request):
+    if request.method == 'POST':
+        usn = request.POST['username']
+        pwd = request.POST['password']
+        user = UserPermission.objects.filter(username=usn, password=pwd).first()
+        print('abc')
+        if user:
+            user_login = UserPermission.objects.get(username=usn)
+            request.session['user_login'] = {
+                'username': user_login.username,
+                'email': user_login.email,
+                'last_name': user_login.employee.last_name,
+                'first_name': user_login.employee.first_name,
+                'is_admin': user_login.is_admin,
+            }
+            print(request.session['user_login'])
+            return render(request, 'app/home.html', {'user_login': user_login})
+        else:
+            messages.error(request, 'Dang nhap that bai.')
+    return render(request, 'app/login.html')
+
+
+def logout(request):
+    # if request.method == 'POST':
+    if 'user_login' in request.session:
+        # print(request.session)
+        del request.session['user_login']
+    return render(request, 'app/login.html')
+
 # class Login(TemplateView):
 #     template_name = 'app/login.html'
 #
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
-#
-#
-#
 #         return context
 
 # @login_required(login_url='/app/login/')
-def login(request):
-    return render(request, 'app/login.html')
+# def login(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     print(username)
+#     return render(request, 'app/login.html')
+
 
 # def handle_login(request):
 #     if request.method == 'POST':

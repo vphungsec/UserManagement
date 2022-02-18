@@ -10,7 +10,9 @@
 
 {% block content %}
 
-    <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
+    <h2>Xin Chao: {{ user_login.username }}</h2>
+
+    <a href="{% url 'logout' %}">Logout</a>
 
     <ul data-bind="template: {name:'pin', foreach: employees}"></ul>
 

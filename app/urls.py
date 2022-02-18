@@ -32,8 +32,9 @@ urlpatterns = [
     # path('', views.Home.as_view(), name='home'),
     # path('index/', include(urls)),
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='app/login.html'), name='login'),
-    # path('login/', views.Login.as_view(), name='login'),
+    # path('login/', auth_views.LoginView.as_view(template_name='app/login.html'), name='login'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('api/v1/', include('app.api.urls'))
 
 ]

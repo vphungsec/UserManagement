@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class Employee(models.Model):
@@ -41,14 +42,28 @@ class Training(models.Model):
 
 class UserPermission(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4())
-    username = models.CharField(max_length=32)
+    username = models.CharField(max_length=32, unique=True)
     password = models.CharField(max_length=32)
-    email = models.CharField(max_length=128)
+    email = models.CharField(max_length=128, unique=True)
     is_admin = models.BooleanField()
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='user_permission_employee_set')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['username']
+
     class Meta:
         db_table = 'user_permission'
         ordering = ['created_at', 'updated_at']
+
+    def __str__(self):
+        return self.username
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
+
+
