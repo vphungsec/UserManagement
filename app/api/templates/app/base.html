@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <script type='text/javascript' src='https://knockoutjs.com/downloads/knockout-3.5.1.js'></script>
+        <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-debug.js'></script>
+        <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js'></script>
+        <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout-pre-rendered/0.8.0/knockout-pre-rendered.js'></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" id="bootstrap-css">
+
+        {% block styles %}{% endblock %}
+
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
