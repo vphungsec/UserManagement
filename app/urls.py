@@ -16,25 +16,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from app.api import views, apis, urls
-from rest_framework.routers import DefaultRouter
-from django.contrib.auth import views as auth_views
+from app.api.views import auth, home
 
-# Create a router and register our viewsets with it.
-# router = DefaultRouter()
-# router.register(r'employees', apis.EmployeeViewSet, 'employee')
-# router.register(r'trainings', apis.TrainingViewSet, 'training')
-# router.register(r'user_permission', apis.UserPermissionViewSet, 'user_permission')
-
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    # path('', views.Login.as_view(), name='login'),
-    # path('', views.Home.as_view(), name='home'),
-    # path('index/', include(urls)),
     path('admin/', admin.site.urls),
-    # path('login/', auth_views.LoginView.as_view(template_name='app/login.html'), name='login'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('api/v1/', include('app.api.urls'))
-
+    path('api/v1/', include('app.api.urls')),
+    path('', home.get_home, name='home'),
+    path('login/', auth.login, name='login'),
+    path('logout/', auth.logout, name='logout'),
 ]

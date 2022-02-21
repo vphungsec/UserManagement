@@ -10,25 +10,29 @@
 
 {% block content %}
 
-    <h2>Xin Chao: {{ user_login.username }}</h2>
+    <h2>Xin Chao: {{ user.username }}</h2>
 
-    <a href="{% url 'logout' %}">Logout</a>
+    <a method="POST" href="{% url 'logout' %}">Logout</a>
 
     <ul data-bind="template: {name:'pin', foreach: employees}"></ul>
 
     <table>
         <thead>
             <tr>
-                <th>Employee ID</th>
                 <th>Language</th>
+                <th>Speaking</th>
+                <th>Listening</th>
+                <th>Writing</th>
                 <th>Score</th>
             </tr>
         </thead>
         <tbody>
             {% for elm in trainings %}
             <tr>
-                <td>{{ elm.employee_id }}</td>
                 <td>{{ elm.language }}</td>
+                <td>{{ elm.speaking }}</td>
+                <td>{{ elm.listening }}</td>
+                <td>{{ elm.writing }}</td>
                 <td>{{ elm.score }}</td>
             </tr>
             {% endfor %}
