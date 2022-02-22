@@ -6,10 +6,9 @@
 
 {% block styles %}
     <link rel="stylesheet" type="text/css" href="{% static 'dist/css/home.css' %}">
-{% endblock styles %}
+{% endblock %}
 
 {% block content %}
-
     <h2>Xin Chao: {{ user.username }}</h2>
 
     <a method="POST" href="{% url 'logout' %}">Logout</a>
