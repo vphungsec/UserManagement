@@ -1,0 +1,41 @@
+.table-title {
+  display: flex;
+  position: relative;
+
+  & a {
+    position: absolute;
+    right: 0;
+  }
+}
+
+table tbody tr .row-actions {
+  visibility: hidden;
+  background-color: #ffffff;
+  border: none;
+
+  a {
+    font-size: 15px;
+
+    &:hover {
+      border: none;
+    }
+  }
+
+  .fa-pen, .fa-trash {
+    padding: 0 3px;
+
+    &:hover {
+      color: #4e73df;
+      font-size: 17px;
+    }
+  }
+}
+
+table tbody tr:hover .row-actions {
+  visibility: visible;
+  background-color: #ffffff;
+}
+
+.pt-3-half {
+  padding-top: 1.4rem;
+}

@@ -17,7 +17,7 @@ def login(request):
             return redirect('home')   # return render(request, 'app/home.html', {'user_login': user_login})
         else:
             messages.error(request, 'Dang nhap that bai.')
-    return render(request, 'app/auth.html')
+    return render(request, 'app/login.html')
 
 
 def logout(request):

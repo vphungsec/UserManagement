@@ -1,0 +1,170 @@
+{% extends 'app/base.html' %}
+
+{% load i18n static %}
+
+{% block title %}Your Training{% endblock %}
+
+{% block body_properties %} id="page-top" {% endblock %}
+
+{% block extrastyle %}
+  <link href="{% static 'dist/css/training.scss' %}" rel="stylesheet" type="text/x-scss">
+  <link href="{% static 'dist/css/custom_table.scss' %}" rel="stylesheet" type="text/x-scss">
+{% endblock %}
+
+{% block center %}
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
+      DataTables documentation</a>.</p>
+
+  <!-- DataTales Example -->
+  <form method="POST" action="{% url 'training' %}" multiple="data" class="form-training">
+    {% csrf_token %}
+    <div class="form-group form-input">
+      <div class="lang">
+        <label for="language" class="col-form-label">Language</label>
+        <input type="text" id="language" name="language" class="form-control" aria-describedby="languageHelpInline">
+      </div>
+      <!-- ko with: countScore -->
+      <div>
+        <label for="speaking" class="col-form-label">Speaking</label>
+        <input type="number" id="speaking" name="speaking" class="form-control" aria-describedby="speakingHelpInline" data-bind="value: speaking">
+      </div>
+      <div>
+        <label for="listening" class="col-form-label">Listening</label>
+        <input type="number" id="listening" name="listening" class="form-control"
+               aria-describedby="listeningHelpInline" data-bind="value: listening">
+      </div>
+      <div>
+        <label for="writing" class="col-form-label">Writing</label>
+        <input type="number" id="writing" name="writing" class="form-control" aria-describedby="writingHelpInline" data-bind="value: writing">
+      </div>
+      <div>
+        <label for="score" class="col-form-label">Score</label>
+        <span id="score" name="score" class="form-control" data-bind="text: score"></span>
+      </div>
+      <!-- /ko-->
+    </div>
+    <div class="form-group form-action">
+      <button type="submit" class="btn text-primary btn-save">
+        <i id="saveform" class="fas fa-check fa-2x text-success" aria-hidden="true"></i>
+      </button>
+    </div>
+  </form>
+
+  <!-- Editable table -->
+  <div class="card">
+{#    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">#}
+{#      Editable table#}
+{#    </h3>#}
+    <div class="card-header py-3">
+      <div class="table-title">
+        <h6 class="m-0 font-weight-bold text-primary">Training Results</h6>
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success">
+            <i id="showform" class="fas fa-plus fa-2x" aria-hidden="true"></i>
+          </a>
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+{#        <span class="table-add float-right mb-3 mr-2"#}
+{#          ><a href="#!" class="text-success"#}
+{#            ><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a#}
+{#        ></span>#}
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <thead>
+            <tr>
+              <th class="text-center" hidden>ID</th>
+              <th class="text-center">Language</th>
+              <th class="text-center">Speaking</th>
+              <th class="text-center">Listening</th>
+              <th class="text-center">Writing</th>
+              <th class="text-center">Score</th>
+            </tr>
+          </thead>
+          <!-- ko with: trainingList -->
+          <tbody data-bind="foreach: trainings">
+            <tr>
+              <td class="pt-3-half" hidden contenteditable="true" data-bind="text: pk"></td>
+              <td class="pt-3-half" contenteditable="true" data-bind="text: language"></td>
+              <td class="pt-3-half" contenteditable="true" data-bind="text: speaking"></td>
+              <td class="pt-3-half" contenteditable="true" data-bind="text: listening"></td>
+              <td class="pt-3-half" contenteditable="true" data-bind="text: writing"></td>
+              <td class="pt-3-half" contenteditable="true" data-bind="text: score"></td>
+              <td class="row-actions">
+                <a id="edit" href="#" class="fa fa-pen"></a>
+                <a id="delete" href="#" class="fa fa-trash"></a>
+              </td>
+            </tr>
+          </tbody>
+          <!-- /ko-->
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Editable table -->
+
+{% endblock %}
+
+{% block script %}
+  <!-- Knockout core JavaScript-->
+  <script src="{% static 'lib/knockout-3.5.1.js' %}"></script>
+  <script src="{% static 'lib/knockout.validation.js' %}"></script>
+
+  <script src="{% static 'dist/vendor/jquery/jquery.min.js' %}"></script>
+
+  <script src="{% static 'dist/js/util.js' %}"></script>
+  <script src="{% static 'dist/js/trainingViewModel.js' %}"></script>
+  <script src="{% static 'dist/js/custom_table.js' %}"></script>
+
+  <!-- Fontawesome core JavaScript-->
+  <script src="{% static 'dist/vendor/fontawesome-free/js/all.min.js' %}"></script>
+
+  <script>
+    $(document).ready(function() {
+
+      $(".form-training").hide();
+
+      $('#showform').click(function() {
+        $('.form-training').slideToggle("fast");
+      });
+      $('#saveform').click(function() {
+        $('.form-training').slideToggle("fast");
+      });
+
+    });
+  </script>
+
+  <script>
+    let trainingViewModel = new TrainingViewModel();
+
+    let trainingList = new function() {
+      this.trainings = ko.observableArray();
+
+      this.init = async function() {
+          this.trainings(await trainingViewModel.fetchTrainingsByUser());
+      }
+    };
+    trainingList.init();
+
+    let countScore = function () {
+      this.score = ko.observable();
+      let speaking = document.getElementById('speaking').value;
+      console.log(speaking);
+      let listening = document.getElementById('listening').value;
+      let writing = document.getElementById('writing').value;
+      let score = (parseFloat(speaking) + parseFloat(listening) + parseFloat(writing))/3;
+      this.score = ko.observable(score);
+    };
+
+    ko.applyBindings({
+        'trainingList': trainingList,
+        'countScore': new countScore()
+    }, document.body);
+  </script>
+
+{% endblock %}

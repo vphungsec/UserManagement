@@ -1,0 +1,34 @@
+.form-training {
+  display: flex;
+  .form-input {
+    display: flex;
+    flex-wrap: nowrap;
+    & .lang {
+      width: 150px;
+    }
+    & div {
+      width: 80px;
+      text-align: center;
+      margin-right: 10px;
+      & label {
+        font-size: 13px;
+      }
+      & input {
+        height: 30px;
+        font-size: 15px;
+      }
+      & input[id="score"] {
+        border: none;
+        background-color: #ffffff;
+      }
+    }
+  }
+  .form-action {
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    button {
+      font-size: 18px;
+    }
+  }
+}

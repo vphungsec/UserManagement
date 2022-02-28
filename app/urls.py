@@ -16,12 +16,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from app.api.views import auth, home
+from app.api.views import auth, home, training
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('app.api.urls')),
-    path('', home.get_home, name='home'),
+    path('', home.index, name='home'),
     path('login/', auth.login, name='login'),
     path('logout/', auth.logout, name='logout'),
+    path('training/', training.index, name='training'),
+    path('training/get_by_employee', training.get_by_employee, name='training/get_by_employee'),
+    # path('training/', training.TrainingView, name='training'),
 ]

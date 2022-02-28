@@ -11,7 +11,7 @@ class Employee(models.Model):
     phone = models.CharField(max_length=15, unique=True, null=True)
     address = models.CharField(max_length=256, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = 'employee'
@@ -31,7 +31,7 @@ class Training(models.Model):
     score = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='created_by_training_set')
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
     updated_by = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='updated_by_training_set')
 
     class Meta:
@@ -47,7 +47,7 @@ class UserPermission(models.Model):
     is_admin = models.BooleanField()
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='user_permission_employee_set')
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['username']
