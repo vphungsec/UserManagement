@@ -20,7 +20,7 @@
       DataTables documentation</a>.</p>
 
   <!-- DataTales Example -->
-  <form method="POST" action="{% url 'training' %}" multiple="data" class="form-training">
+  <form method="POST" action="{% url 'training/post' %}" multiple="data" class="form-training">
     {% csrf_token %}
     <div class="form-group form-input">
       <div class="lang">
@@ -41,10 +41,10 @@
         <label for="writing" class="col-form-label">Writing</label>
         <input type="number" id="writing" name="writing" class="form-control" aria-describedby="writingHelpInline" data-bind="value: writing">
       </div>
-      <div>
-        <label for="score" class="col-form-label">Score</label>
-        <span id="score" name="score" class="form-control" data-bind="text: score"></span>
-      </div>
+{#      <div>#}
+{#        <label for="score" class="col-form-label">Score</label>#}
+{#        <span id="score" name="score" class="form-control" data-bind="text: score"></span>#}
+{#      </div>#}
       <!-- /ko-->
     </div>
     <div class="form-group form-action">

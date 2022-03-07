@@ -26,5 +26,6 @@ urlpatterns = [
     path('logout/', auth.logout, name='logout'),
     path('training/', training.index, name='training'),
     path('training/get_by_employee', training.get_by_employee, name='training/get_by_employee'),
+    path('training/post', training.post, name='training/post'),
     # path('training/', training.TrainingView, name='training'),
 ]

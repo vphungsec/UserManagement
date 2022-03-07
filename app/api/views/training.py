@@ -51,18 +51,21 @@ def get_by_employee(request):
                 return JsonResponse(data=trainings, safe=False, status=200)
     return JsonResponse(data={'error': 'Bad request'}, safe=False, status=400)
 
-# @api_view(['POST'])
-# def post(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # data.score = (float(data.speaking) + float(data.listening) + float(data.writing))/3
-#         print(data)
-#         # print(str(data))
-#         # serializer = TrainingSerializer(data=request.data)
-#         # if serializer.is_valid():
-#         #     serializer.save()
-#         #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def post(request):
+    if request.method == 'POST':
+        raw = request.POST
+        # data = JSONParser().parse(request)
+        # data.score = (float(data.speaking) + float(data.listening) + float(data.writing))/3
+        print(data)
+        # print(str(data))
+        # serializer = TrainingSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse(data=data, safe=False, status=200)
+    return JsonResponse(data={'error': 'Bad request'}, safe=False, status=400)
 
 
 class TrainingView(APIView):
